@@ -1,0 +1,27 @@
+<div>
+  <div class="col-md-6 col-offset-3">
+    <h1>Log in</h1>
+    <hr />
+    <br />
+    <app-login-form (userInvalid)='showAlertUsuarioInexistente($event)'></app-login-form>
+    <p></p>   
+    <div style="width:100%;">
+      <button
+        style="display: block; width: 100%;"
+        mat-flat-button
+        (click)="doProviderLogin('Google')"
+        color="warn"
+      >
+        Login with Google
+      </button>
+      <button
+        style="display: block; width: 100%;"
+        mat-flat-button
+        (click)="doProviderLogin('Facebook')"
+        color="primary"
+      >
+        Login with Facebook
+      </button>
+    </div>
+  </div>
+</div>

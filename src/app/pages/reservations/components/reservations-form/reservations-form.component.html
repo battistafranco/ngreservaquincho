@@ -1,0 +1,57 @@
+<div *ngIf="alertMsg" class="alert alert-info alert-dismissible" role="alert">
+    <button type="button" (click)="closeAlert()" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Info!</strong> {{alertMsg}}
+  </div>
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div class="form-group">
+    <mat-form-field>
+      <mat-select
+        class="full-width"
+        id="turno"
+        (change)="onChanges()"
+        formControlName="turno" required
+        placeholder="Seleccione el turno"
+      >
+        <mat-option *ngFor="let t of turnos" [value]="t.value"> {{ t.text }} </mat-option>
+      </mat-select>
+    </mat-form-field>   
+  </div>
+
+  <div class="form-group">
+    <mat-form-field class="example-full-width">
+      <input
+        id="fecha"
+        matInput
+        [matDatepicker]="picker"
+        [min]="minDate"
+        formControlName="fecha"
+        [matDatepicker]="picker"
+        (click)="picker.open()"
+        (change)="onChanges()"
+        placeholder="Seleccione una fecha"     
+        required
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker touchUi #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div class="form-group">
+    <mat-form-field class="example-full-width">
+      <input
+        id="observacion"
+        formControlName="observacion"
+        matInput
+        placeholder="Observaciones"
+      />
+    </mat-form-field>
+  </div>
+  <div style="width:100%;">
+    <div *ngIf="form.valid && ((reservaIsInvalid$ | async)?.length > 0)" class="alert alert-warning" role="alert">         
+          <strong>Info!</strong> Quincho ocupado. Seleccione otra fecha o turno..
+    </div>
+    <button mat-raised-button [disabled]="(!form.valid || (reservaIsInvalid$ | async)?.length > 0)" style="display: block; width: 100%;" color="primary" type="submit">
+      Reservar
+    </button>
+    <span class="ml-2">{{ status$ | async }}</span>
+  </div>
+</form>

@@ -1,0 +1,63 @@
+<div class="col-md-12">
+  <div class="text-center">
+    <div>
+      Fecha de Hoy: <b>{{ today | date: "dd/MM/yyyy" }}</b>
+    </div>
+    <div class="btn-group" role="group" aria-label="...">
+      <button type="button" (click)="setDate(-1)" class="btn btn-primary">
+        <i class="material-icons">chevron_left</i>
+      </button>
+      <button type="button" (click)="setDate(0)" class="btn btn-primary">
+        Ver Mes Actual
+      </button>
+      <button type="button" (click)="setDate(1)" class="btn btn-primary">
+        <i class="material-icons">chevron_right</i>
+      </button>
+    </div>
+    <legend>Reservas de {{ selectedMonthDesc }}</legend>
+  </div>
+
+  <table style="font-size:smaller" class="table">
+    <thead>
+      <tr>
+        <th style="text-align: center">Fecha</th>
+        <th style="text-align: center">Dpto.</th>
+        <th style="text-align: center" colspan="2">Turno</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let reserva of (reservas$ | async); let i = index">
+        <tr [ngClass]="{'bgGray': !isEven(i)}">
+          <td style="text-align: center">
+            {{ reserva.fecha | date: "EEEE" }} <br />
+            {{ reserva.fecha | date: "dd/MM/yyyy" }}
+          </td>
+          <td style="text-align: center">{{ reserva.departamento }}</td>
+          <td style="text-align:center" *ngIf="reserva.turno == 'Mediodia'">
+            ☀️ <br />{{ reserva.turno }}
+          </td>
+          <td style="text-align:center" *ngIf="reserva.turno == 'Noche'">
+            ⭐ <br />{{ reserva.turno }}
+          </td>
+          <td style="text-align: center">
+            <button
+              (click)="delete(reserva.id)"
+              *ngIf="(_authService.user | async)?.email == reserva.usuario"
+              mat-mini-fab
+            >
+              <mat-icon aria-label="Delete">delete_forever</mat-icon>
+            </button>
+          </td>        
+        </tr>
+        <tr [ngClass]=" {'bgGray': !isEven(i)}" *ngIf="reserva.observacion != ''">
+          <td style="text-align:right" >
+          <u>  Obs.:</u>
+          </td >
+          <td style="text-align:left" colspan="3">
+           <i> {{ reserva.observacion }}</i>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

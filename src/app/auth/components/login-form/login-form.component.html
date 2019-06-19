@@ -1,0 +1,46 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <mat-form-field class="example-full-width">
+      <input
+        id="email"
+        formControlName="email"
+        matInput
+        placeholder="Email"
+        required
+      />
+    </mat-form-field>
+  </div>
+  <div class="form-group">
+    <mat-form-field class="example-full-width">
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        matInput
+        placeholder="Password"
+        required
+      />
+    </mat-form-field>
+  </div>
+  <div style="width:100%;">
+    <button
+      [disabled]="form.invalid"
+      type="submit"
+      style="display: block; width: 100%;"
+      mat-flat-button
+      color="accent"
+    >
+      Ingresar
+    </button>
+  </div>
+  <span class="ml-2"></span>
+  <div *ngIf="(type$ | async) == 'error'" class="alert alert-warning" role="alert">
+    <strong>Oops!</strong> {{ status$ | async }}
+  </div>
+  <div *ngIf="(type$ | async) == 'info'" class="alert alert-info" role="alert">
+    <strong>Info!</strong> {{ status$ | async }}
+  </div>
+  <div *ngIf="(type$ | async) == 'success'" class="alert alert-success" role="alert">
+    <strong>OK!</strong> {{ status$ | async }}
+  </div>
+</form>

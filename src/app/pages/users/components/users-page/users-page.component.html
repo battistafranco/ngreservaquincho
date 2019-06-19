@@ -1,0 +1,13 @@
+<div [class.text-centered]="currentUser.isAdmin" [class.text-left]="!currentUser.isAdmin" class="col-md-12 mb-3 col-xs-12">
+  <h4>Usuarios</h4>
+</div>
+<div class="container-fluid">
+  <div class="row col-md-12">
+    <div class="col-md-6 col-xs-12">
+      <app-users-list [currentUser]='currentUser'></app-users-list>
+    </div>
+    <div *ngIf='currentUser.isAdmin' class="col-md-6 col-xs-12">
+      <app-users-form></app-users-form>
+    </div>
+  </div>
+</div>

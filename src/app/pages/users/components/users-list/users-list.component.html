@@ -1,0 +1,18 @@
+<div style="margin: 0 auto; text-align:center">
+    <div *ngIf="(loading$ | async)">Loading...</div>
+    <div *ngIf="(noResults$ | async)">No results</div>
+    <div
+      class="card bg-light mb-3"
+      style="margin: 0 auto"
+      *ngFor="let user of (users$ | async)"
+    >
+      <div class="card-header">Depto: {{ user.apartment }}</div>
+      <div class="card-body">
+        <h5 class="card-title">{{ user.name }}</h5>
+        <h6>{{ user.email }}</h6>
+        <h6 *ngIf="user.isAdmin ">Rol Administrador</h6>
+        <h6 *ngIf="!user.isAdmin">Rol Usuario</h6>
+        <button [disabled]="!currentUser.isAdmin" (click)="delete(user)" class="btn btn-danger">Eliminar</button>
+      </div>
+    </div>
+</div>
